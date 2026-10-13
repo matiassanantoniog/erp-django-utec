@@ -17,6 +17,12 @@ y repositorio en GitHub con al menos 10 commits.
 
 **Total de puntos del sprint:** 10
 
+## Hito M1 — ALCANZADO ✅
+- URL pública: https://erp-django-utec-a7dm.onrender.com/
+- Tests: Ran 33 tests → OK
+- Commits: ≥ 6 en rama main
+- Fecha: 08/Oct/2026
+
 ## Sprint Backlog — Tareas técnicas W01
 
 | Tarea | Responsable | Estado | Horas est. |

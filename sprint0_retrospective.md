@@ -1,8 +1,8 @@
 # Sprint 0 Retrospective — ERP Django
 ## Semanas W01–W03 · Espiral 1
 
-**Fecha:** ___/___/_____
-**Facilitador/Scrum Master:** [Nombre]
+**Fecha:** 07/Oct/2026
+**Facilitador/Scrum Master:** [Matias Arhem Sann Antonio Gamiño]
 
 ## ¿Qué funcionó bien? (Keep)
 1.

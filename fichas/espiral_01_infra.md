@@ -8,8 +8,8 @@
 | **Nombre del ciclo** | Infraestructura y Configuración Base |
 | **Semanas** | W01 – W03 |
 | **Fecha de inicio** | ___/___/_____ |
-| **Fecha de cierre** | ___/___/_____ |
-| **Responsable** | [Nombre del estudiante] |
+| **Fecha de cierre** | 07/Oct/2026 |
+| **Responsable** | [Matias Arhem San Antonio Gamiño] |
 | **Asesor** | MC. Román Fernando López González |
 
 ---
