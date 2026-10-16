@@ -12,13 +12,14 @@ Decisiones de diseño aplicadas:
     D-05: DetalleVenta.producto → PROTECT.
     D-06: DetalleVenta.precio_unitario → almacenado (histórico).
 """
+from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
 from decimal import Decimal
 
 from django.db import models
 
 from clientes.models  import Cliente
 from productos.models import Producto
-
 
 # ── Venta ─────────────────────────────────────────────────────────────────
 
@@ -35,7 +36,7 @@ class Venta(models.Model):
         related_name='ventas',
         verbose_name='Cliente'
     )
-    fecha   = models.DateTimeField(
+    fecha = models.DateTimeField(
         auto_now_add=True, verbose_name='Fecha'
     )
 
@@ -75,13 +76,13 @@ class DetalleVenta(models.Model):
 
     venta           = models.ForeignKey(
         Venta,
-        on_delete=models.CASCADE,      # borrar Venta → borrar sus líneas
+        on_delete=models.CASCADE,
         related_name='detalles',
         verbose_name='Venta'
     )
     producto        = models.ForeignKey(
         Producto,
-        on_delete=models.PROTECT,      # D-05: no borrar producto con ventas
+        on_delete=models.PROTECT,
         related_name='detalles_venta',
         verbose_name='Producto'
     )
@@ -106,6 +107,17 @@ class DetalleVenta(models.Model):
     def subtotal(self) -> Decimal:
         """Subtotal de la línea: cantidad × precio_unitario."""
         return self.precio_unitario * self.cantidad
+
+    def clean(self) -> None:
+        """Validación de negocio para línea de detalle.
+
+        Raises:
+            ValidationError: si cantidad < 1.
+        """
+        if self.cantidad is not None and self.cantidad < 1:
+            raise ValidationError(
+                {'cantidad': 'La cantidad debe ser al menos 1.'}
+            )
 
     def save(self, *args, **kwargs) -> None:
         """Captura el precio actual del producto si no se especificó.
@@ -160,11 +172,13 @@ class Pedido(models.Model):
         null=True, blank=True, verbose_name='Fecha de entrega'
     )
     total_pagado  = models.DecimalField(
-        max_digits=10, decimal_places=2,
-        null=True, blank=True,
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        validators=[MinValueValidator(Decimal('0.00'))],  # ← agregar
         verbose_name='Total pagado'
     )
-
     class Meta:
         verbose_name        = 'Pedido'
         verbose_name_plural = 'Pedidos'
