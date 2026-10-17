@@ -8,8 +8,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env(DEBUG=(bool, True))
 environ.Env.read_env(BASE_DIR / '.env')
 
-SECRET_KEY  = env('SECRET_KEY', default='dev-key-insegura-solo-para-desarrollo')
-DEBUG       = env('DEBUG', default=True)
+SECRET_KEY = env('SECRET_KEY', default='dev-key-insegura-solo-para-desarrollo')
+DEBUG = env('DEBUG', default=True)
 #ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
 
