@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#3B1A4F">
-    <title>{% block title %}ERP Django{% endblock %} · Matias 3J</title>
+    <title>{% block title %}Monsters Inc.{% endblock %} · Matias 3J</title>
 
     <!-- Google Fonts: Playfair Display + Inter + JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,22 +16,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
-    <!-- Fable 5 ChomperERP — Design System (paleta: planta Chomper) -->
+    <!-- Fable 5 ChomperERP — Design System -->
     <style>
-        /* TOKENS MODO DÍA
-           navy  = morado profundo del tallo
-           royal = morado de la cabeza
-           sky   = lila de las manchas
-           ice   = lavanda muy claro
-           gold  = verde lima de los labios
-           cream = verde pálido de los dientes/cuernos */
+        /* TOKENS MODO DÍA — paleta Chomper */
         :root, [data-theme="light"] {
             --clr-navy   : #3B1A4F;
             --clr-royal  : #7B3FA0;
             --clr-sky    : #A468C0;
             --clr-ice    : #F1E7F7;
             --clr-gold   : #8DC63F;
-            --clr-gold-dk: #4F7D1A;   /* verde lima oscuro: texto sobre fondos claros */
+            --clr-gold-dk: #4F7D1A;
             --clr-amber  : #A6D854;
             --clr-cream  : #F3F9E4;
             --clr-bg     : #F8F3FB;
@@ -39,30 +33,38 @@
             --clr-text   : #24112F;
             --clr-muted  : #6B5A78;
             --clr-border : #DCC8E8;
-            --clr-danger : #C2185B;   /* rosa de la lengua */
-            --clr-ok     : #2F7D32;   /* verde de las hojas */
+            --clr-danger : #C2185B;
+            --clr-ok     : #2F7D32;
             --shadow-sm  : 0 1px 4px rgba(59,26,79,.10);
             --shadow-md  : 0 4px 16px rgba(59,26,79,.16);
+            --hover-row  : rgba(164,104,192,.14);
+            --focus-ring : rgba(164,104,192,.28);
+            --code-bg    : #F1E7F7;
+            --code-color : #7B3FA0;
         }
-        /* TOKENS MODO NOCHE */
+        /* TOKENS MODO NOCHE — paleta Sun-shroom */
         [data-theme="dark"] {
-            --clr-navy   : #2A1238;
-            --clr-royal  : #8F4FB5;
-            --clr-sky    : #C08AE0;
-            --clr-ice    : #2A1A38;
-            --clr-gold   : #A8DB4F;
-            --clr-gold-dk: #A8DB4F;
-            --clr-amber  : #C5E86C;
-            --clr-cream  : #243018;
-            --clr-bg     : #150B1D;
-            --clr-surface: #20122D;
-            --clr-text   : #F0E6F7;
-            --clr-muted  : #B49AC6;
-            --clr-border : #43285A;
-            --clr-danger : #FF5C8A;
-            --clr-ok     : #6FD36F;
-            --shadow-sm  : 0 1px 4px rgba(0,0,0,.35);
-            --shadow-md  : 0 4px 16px rgba(0,0,0,.45);
+            --clr-navy   : #2B1A0A;
+            --clr-royal  : #A8631A;
+            --clr-sky    : #F2B94B;
+            --clr-ice    : #2E2010;
+            --clr-gold   : #F5C21B;
+            --clr-gold-dk: #F5C21B;
+            --clr-amber  : #FFD84D;
+            --clr-cream  : #3A2D12;
+            --clr-bg     : #1A1108;
+            --clr-surface: #251808;
+            --clr-text   : #FFFFFF;   /* letras blancas */
+            --clr-muted  : #C9B284;
+            --clr-border : #4A3418;
+            --clr-danger : #FF6B5A;
+            --clr-ok     : #7BC96F;
+            --shadow-sm  : 0 1px 4px rgba(0,0,0,.4);
+            --shadow-md  : 0 4px 16px rgba(0,0,0,.5);
+            --hover-row  : rgba(245,194,27,.10);
+            --focus-ring : rgba(245,194,27,.28);
+            --code-bg    : rgba(242,185,75,.14);
+            --code-color : #F2B94B;
         }
         /* BASE */
         *, *::before, *::after { box-sizing: border-box; }
@@ -75,8 +77,44 @@
             transition: background .25s, color .25s;
             margin: 0;
         }
+
+        /* ========== FIGURA MODO DÍA: DIENTES ==========
+           Fila de dientes blancos que cuelgan del labio verde de la barra */
+        .erp-navbar::after {
+            content: "";
+            position: absolute;
+            left: 0; right: 0;
+            top: calc(100% + 3px);          /* justo debajo del borde verde */
+            height: 14px;
+            background: conic-gradient(from -45deg at bottom, #0000, #FFFFFF 1deg 90deg, #0000 91deg)
+                        50% / 24px 100%;
+            filter: drop-shadow(0 1px 1px rgba(59,26,79,.45));
+            pointer-events: none;
+        }
+        [data-theme="dark"] .erp-navbar::after { display: none; }
+
+        /* ========== FIGURA MODO NOCHE: SOL ==========
+           Sol con rayos en la esquina superior derecha */
+        body::before { content: none; }
+        [data-theme="dark"] body::before {
+            content: "";
+            position: fixed;
+            top: 78px; right: -40px;
+            width: 170px; height: 170px;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle, #FFD84D 0 34%, transparent 35%),
+                repeating-conic-gradient(#F5C21B 0 9deg, transparent 9deg 30deg);
+            -webkit-mask: radial-gradient(circle, #000 0 98%, transparent 100%);
+                    mask: radial-gradient(circle, #000 0 98%, transparent 100%);
+            opacity: .28;
+            pointer-events: none;
+            z-index: 0;
+        }
+
         /* NAVBAR */
         .erp-navbar {
+            position: relative; z-index: 10;
             background: var(--clr-navy);
             border-bottom: 3px solid var(--clr-gold);
             padding: .65rem 1.5rem;
@@ -87,13 +125,13 @@
         .erp-brand {
             font-family: 'Playfair Display',Georgia,serif;
             font-size: 1.3rem; font-weight: 700;
-            color: var(--clr-gold) !important;
+            color: #FFFFFF !important;       /* letras blancas */
             text-decoration: none; letter-spacing: .04em;
         }
-        .erp-brand span { color: rgba(255,255,255,.7); font-weight: 300; font-size: .85em; }
+        .erp-brand span { color: rgba(255,255,255,.85); font-weight: 300; font-size: .85em; }
         .erp-nav-links { display: flex; align-items: center; gap: .25rem; flex-wrap: wrap; }
         .erp-nav-link {
-            color: rgba(255,255,255,.85) !important;
+            color: #FFFFFF !important;       /* letras blancas */
             font-size: .88rem; font-weight: 500;
             padding: .35rem .75rem; border-radius: 6px;
             text-decoration: none;
@@ -110,7 +148,10 @@
         }
         .theme-toggle:hover { transform: rotate(20deg); }
         /* CONTENIDO */
-        .erp-main { padding: 2rem 0; min-height: calc(100vh - 110px); }
+        .erp-main {
+            position: relative; z-index: 1;
+            padding: 2rem 0; min-height: calc(100vh - 110px);
+        }
         /* CARDS */
         .erp-card {
             background: var(--clr-surface);
@@ -145,7 +186,7 @@
             border-bottom: 1px solid var(--clr-border); font-size: .9rem;
         }
         .erp-table tbody tr:nth-child(even) td { background: var(--clr-ice); }
-        .erp-table tbody tr:hover td { background: rgba(164,104,192,.14); }
+        .erp-table tbody tr:hover td { background: var(--hover-row); }
         .erp-table tfoot td {
             background: var(--clr-cream); color: var(--clr-gold-dk);
             font-weight: 700; border-top: 2px solid var(--clr-gold);
@@ -188,7 +229,7 @@
         }
         .erp-input:focus {
             outline: none; border-color: var(--clr-sky);
-            box-shadow: 0 0 0 3px rgba(164,104,192,.28);
+            box-shadow: 0 0 0 3px var(--focus-ring);
         }
         /* BADGES */
         .badge-erp-active {
@@ -234,20 +275,17 @@
             font-family: 'Playfair Display',serif;
             font-size: 1.6rem; color: var(--clr-navy); margin: 0;
         }
-        [data-theme="dark"] .erp-page-title h2 { color: var(--clr-sky); }
+        [data-theme="dark"] .erp-page-title h2 { color: #FFFFFF; }
         /* CÓDIGO */
         code, .mono {
             font-family: 'JetBrains Mono',Consolas,monospace;
-            font-size: .85em; color: var(--clr-royal);
-            background: var(--clr-ice); padding: .1em .4em; border-radius: 4px;
-        }
-        [data-theme="dark"] code,
-        [data-theme="dark"] .mono {
-            color: var(--clr-sky); background: rgba(192,138,224,.14);
+            font-size: .85em; color: var(--code-color);
+            background: var(--code-bg); padding: .1em .4em; border-radius: 4px;
         }
         /* FOOTER */
         .erp-footer {
-            background: var(--clr-navy); color: rgba(255,255,255,.65);
+            position: relative; z-index: 1;
+            background: var(--clr-navy); color: #FFFFFF;
             text-align: center; font-size: .78rem;
             padding: .75rem; border-top: 2px solid var(--clr-gold);
         }
@@ -259,15 +297,15 @@
 
 <!-- NAVBAR -->
 <nav class="erp-navbar">
-    <a class="erp-brand" href="/">📦 ERP Django <span>· Matias 3J</span></a>
+    <a class="erp-brand" href="/">📦 Monsters Inc. <span>· Matias 3J</span></a>
     <div class="erp-nav-links">
-        <a href="{% url 'productos:inicio' %}"
+        <a href="{% url 'productos:lista' %}"
            class="erp-nav-link {% block nav_productos %}{% endblock %}">Productos</a>
-        <a href="{% url 'clientes:inicio' %}"
+        <a href="{% url 'clientes:lista' %}"
            class="erp-nav-link {% block nav_clientes %}{% endblock %}">Clientes</a>
-        <a href="{% url 'proveedores:inicio' %}"
+        <a href="{% url 'proveedores:lista' %}"
            class="erp-nav-link {% block nav_proveedores %}{% endblock %}">Proveedores</a>
-        <a href="{% url 'ventas:inicio' %}"
+        <a href="{% url 'ventas:lista' %}"
            class="erp-nav-link {% block nav_ventas %}{% endblock %}">Ventas</a>
         <a href="{% url 'reportes:inicio' %}"
            class="erp-nav-link {% block nav_reportes %}{% endblock %}">Reportes</a>
@@ -306,7 +344,7 @@
 
 <!-- FOOTER -->
 <footer class="erp-footer">
-    ERP Django · Django 4.2 LTS · Fable 5 ChomperERP · Matias 3J · Espiral 1
+    ~ Dichosos los ojos que te miran por aca ATTE: El ciego ~
 </footer>
 
 <!-- Bootstrap JS -->
