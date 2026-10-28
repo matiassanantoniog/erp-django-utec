@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#3B1A4F">
+    <meta name="theme-color" content="#2B6CB0">
     <title>{% block title %}Monsters Inc.{% endblock %} · Matias 3J</title>
 
     <!-- Google Fonts: Playfair Display + Inter + JetBrains Mono -->
@@ -18,54 +18,105 @@
 
     <!-- Fable 5 ChomperERP — Design System -->
     <style>
-        /* TOKENS MODO DÍA — paleta Chomper */
+        /* TOKENS MODO DÍA — paleta de los esqueletos */
         :root, [data-theme="light"] {
-            --clr-navy   : #3B1A4F;
-            --clr-royal  : #7B3FA0;
-            --clr-sky    : #A468C0;
-            --clr-ice    : #F1E7F7;
-            --clr-gold   : #8DC63F;
-            --clr-gold-dk: #4F7D1A;
-            --clr-amber  : #A6D854;
-            --clr-cream  : #F3F9E4;
-            --clr-bg     : #F8F3FB;
+            --clr-navy   : #2E1F4F;
+            --clr-royal  : #6A3FA0;
+            --clr-sky    : #9B6FD0;
+            --clr-ice    : #F6F0DC;
+            --clr-gold   : #C73D95;
+            --clr-gold-dk: #8F2468;
+            --clr-amber  : #A82D78;
+            --clr-cream  : #FBF4DC;
+            --clr-bg     : #EDE3C4;
             --clr-surface: #FFFFFF;
-            --clr-text   : #24112F;
-            --clr-muted  : #6B5A78;
-            --clr-border : #DCC8E8;
-            --clr-danger : #C2185B;
-            --clr-ok     : #2F7D32;
-            --shadow-sm  : 0 1px 4px rgba(59,26,79,.10);
-            --shadow-md  : 0 4px 16px rgba(59,26,79,.16);
-            --hover-row  : rgba(164,104,192,.14);
-            --focus-ring : rgba(164,104,192,.28);
-            --code-bg    : #F1E7F7;
-            --code-color : #7B3FA0;
+            --clr-text   : #2A1B3D;
+            --clr-muted  : #6B5B7E;
+            --clr-border : #D9CDA6;
+            --clr-danger : #D63A2F;
+            --clr-ok     : #2E8B57;
+            --shadow-sm  : 0 1px 4px rgba(46,31,79,.12);
+            --shadow-md  : 0 4px 16px rgba(46,31,79,.18);
+            --hover-row  : rgba(199,61,149,.14);
+            --focus-ring : rgba(199,61,149,.32);
+            --code-bg    : #F6F0DC;
+            --code-color : #6A3FA0;
+
+            --nav-bg     : #2B6CB0;
+            --nav-border : #7DB9F0;
+            --foot-bg    : #C73D95;
+            --foot-border: #F08AC8;
+
+            --main-bg    : radial-gradient(ellipse at 30% 0%, #F7F0D8 0%, #EDE3C4 55%, #E2D5AE 100%);
+            --page-text  : #2A1B3D;
+            --page-line  : rgba(42,27,61,.25);
+
+            --nav-btn-bg      : #2E8B57;
+            --nav-btn-border  : #7BD6A0;
+            --nav-btn-hover   : #226B44;
+            --toggle-bg       : #2E8B57;
+            --toggle-fg       : #FFFFFF;
+
+            --row-red        : #C0332A;
+            --row-red-hover  : #DB4A40;
+            --row-black      : #141414;
+            --row-black-hover: #2E2E2E;
+            --row-text       : #FFFFFF;
+            --row-line       : rgba(255,255,255,.18);
+
+            --leaf-opacity   : .95;
+            --leaf-glow      : 0 2px 3px rgba(46,31,79,.35);
         }
-        /* TOKENS MODO NOCHE — paleta Sun-shroom */
+        /* TOKENS MODO NOCHE */
         [data-theme="dark"] {
-            --clr-navy   : #2B1A0A;
-            --clr-royal  : #A8631A;
-            --clr-sky    : #F2B94B;
-            --clr-ice    : #2E2010;
-            --clr-gold   : #F5C21B;
-            --clr-gold-dk: #F5C21B;
-            --clr-amber  : #FFD84D;
-            --clr-cream  : #3A2D12;
-            --clr-bg     : #1A1108;
-            --clr-surface: #251808;
-            --clr-text   : #FFFFFF;   /* letras blancas */
-            --clr-muted  : #C9B284;
-            --clr-border : #4A3418;
-            --clr-danger : #FF6B5A;
+            --clr-navy   : #1A0505;
+            --clr-royal  : #8E1B1B;
+            --clr-sky    : #FF5A4D;
+            --clr-ice    : #2A0C0C;
+            --clr-gold   : #E8262A;
+            --clr-gold-dk: #FF6A5E;
+            --clr-amber  : #FF4B3E;
+            --clr-cream  : #330E0E;
+            --clr-bg     : #0D0303;
+            --clr-surface: #1B0808;
+            --clr-text   : #FFFFFF;
+            --clr-muted  : #DDA9A4;
+            --clr-border : #5A1414;
+            --clr-danger : #FF7A7A;
             --clr-ok     : #7BC96F;
-            --shadow-sm  : 0 1px 4px rgba(0,0,0,.4);
-            --shadow-md  : 0 4px 16px rgba(0,0,0,.5);
-            --hover-row  : rgba(245,194,27,.10);
-            --focus-ring : rgba(245,194,27,.28);
-            --code-bg    : rgba(242,185,75,.14);
-            --code-color : #F2B94B;
+            --shadow-sm  : 0 1px 4px rgba(0,0,0,.5);
+            --shadow-md  : 0 4px 18px rgba(232,38,42,.22);
+            --hover-row  : rgba(232,38,42,.16);
+            --focus-ring : rgba(232,38,42,.40);
+            --code-bg    : rgba(232,38,42,.16);
+            --code-color : #FF7A6E;
+
+            --nav-bg     : #1A0505;
+            --nav-border : #E8262A;
+            --foot-bg    : #1A0505;
+            --foot-border: #E8262A;
+
+            --main-bg    : transparent;
+            --page-text  : #FFFFFF;
+            --page-line  : #5A1414;
+
+            --nav-btn-bg      : transparent;
+            --nav-btn-border  : transparent;
+            --nav-btn-hover   : #8E1B1B;
+            --toggle-bg       : #E8262A;
+            --toggle-fg       : #FFFFFF;
+
+            --row-red        : #A31D1D;
+            --row-red-hover  : #C42B2B;
+            --row-black      : #0A0A0A;
+            --row-black-hover: #2A1212;
+            --row-text       : #FFFFFF;
+            --row-line       : rgba(255,255,255,.16);
+
+            --leaf-opacity   : .85;
+            --leaf-glow      : 0 0 10px rgba(232,38,42,.55);
         }
+
         /* BASE */
         *, *::before, *::after { box-sizing: border-box; }
         body {
@@ -78,36 +129,95 @@
             margin: 0;
         }
 
-        /* ========== FIGURA MODO DÍA: DIENTES ==========
-           Fila de dientes blancos que cuelgan del labio verde de la barra */
+        /* ========== HOJAS CAYENDO (🏵️) — AMBOS MODOS ==========
+           CORREGIDO: z-index alto, tamaño explícito, duraciones por defecto
+           en CSS (respaldo si el JS falla), line-height:1 en el span. */
+        #leafLayer {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        .leaf {
+            position: absolute;
+            top: -12vh;
+            will-change: transform;
+            animation-name: leaf-fall;
+            animation-duration: 12s;         /* respaldo por defecto */
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+        .leaf span {
+            display: inline-block;
+            line-height: 1;
+            opacity: var(--leaf-opacity);
+            filter: drop-shadow(var(--leaf-glow));
+            animation-name: leaf-sway;
+            animation-duration: 4s;          /* respaldo por defecto */
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+        @keyframes leaf-fall {
+            0%   { transform: translateY(0); }
+            100% { transform: translateY(125vh); }
+        }
+        @keyframes leaf-sway {
+            0%   { transform: translateX(-32px) rotate(-40deg); }
+            25%  { transform: translateX(8px)   rotate(15deg)  scaleX(.8); }
+            50%  { transform: translateX(36px)  rotate(50deg); }
+            75%  { transform: translateX(2px)   rotate(-5deg)  scaleX(.85); }
+            100% { transform: translateX(-32px) rotate(-40deg); }
+        }
+        /* Si la persona prefiere menos movimiento, no se muestran */
+        @media (prefers-reduced-motion: reduce) {
+            #leafLayer { display: none; }
+        }
+
+        /* ========== FIGURA MODO DÍA: CALAVERITAS DE ARRIBA ========== */
         .erp-navbar::after {
             content: "";
             position: absolute;
             left: 0; right: 0;
-            top: calc(100% + 3px);          /* justo debajo del borde verde */
-            height: 14px;
-            background: conic-gradient(from -45deg at bottom, #0000, #FFFFFF 1deg 90deg, #0000 91deg)
-                        50% / 24px 100%;
-            filter: drop-shadow(0 1px 1px rgba(59,26,79,.45));
+            top: calc(100% + 3px);
+            height: 24px;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 24'><path d='M18 1.5C12 1.5 8.5 5.5 8.5 10.5c0 3 1.3 4.8 3 5.8V20c0 1.1.9 2 2 2h9c1.1 0 2-.9 2-2v-3.7c1.7-1 3-2.8 3-5.8C27.5 5.5 24 1.5 18 1.5Z' fill='%23FBF4DC' stroke='%232E1F4F' stroke-width='1.2'/><circle cx='14.3' cy='10.5' r='2.9' fill='%232B6CB0'/><circle cx='21.7' cy='10.5' r='2.9' fill='%232B6CB0'/><circle cx='14.3' cy='10.5' r='1.1' fill='%23FBF4DC'/><circle cx='21.7' cy='10.5' r='1.1' fill='%23FBF4DC'/><path d='M18 13.3l-1.3 2.2h2.6z' fill='%232E1F4F'/><path d='M14.5 18v3.4M18 18v3.4M21.5 18v3.4' stroke='%232E1F4F' stroke-width='1'/></svg>");
+            background-repeat: repeat-x;
+            background-size: 36px 24px;
+            background-position: 0 0;
+            filter: drop-shadow(0 1px 1px rgba(46,31,79,.45));
             pointer-events: none;
         }
         [data-theme="dark"] .erp-navbar::after { display: none; }
 
-        /* ========== FIGURA MODO NOCHE: SOL ==========
-           Sol con rayos en la esquina superior derecha */
-        body::before { content: none; }
-        [data-theme="dark"] body::before {
+        /* ========== FIGURA MODO DÍA: CALAVERITAS DE ABAJO ========== */
+        .erp-footer::before {
             content: "";
+            position: absolute;
+            left: 0; right: 0;
+            bottom: calc(100% + 2px);
+            height: 24px;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 24'><path d='M18 1.5C12 1.5 8.5 5.5 8.5 10.5c0 3 1.3 4.8 3 5.8V20c0 1.1.9 2 2 2h9c1.1 0 2-.9 2-2v-3.7c1.7-1 3-2.8 3-5.8C27.5 5.5 24 1.5 18 1.5Z' fill='%23FBF4DC' stroke='%238F2468' stroke-width='1.2'/><circle cx='14.3' cy='10.5' r='2.9' fill='%23C73D95'/><circle cx='21.7' cy='10.5' r='2.9' fill='%23C73D95'/><circle cx='14.3' cy='10.5' r='1.1' fill='%23FBF4DC'/><circle cx='21.7' cy='10.5' r='1.1' fill='%23FBF4DC'/><path d='M18 13.3l-1.3 2.2h2.6z' fill='%238F2468'/><path d='M14.5 18v3.4M18 18v3.4M21.5 18v3.4' stroke='%238F2468' stroke-width='1'/><path d='M11 5L5.5 2.5v5Z M11 5l5.5-2.5v5Z' fill='%23C73D95'/><circle cx='11' cy='5' r='1.2' fill='%238F2468'/></svg>");
+            background-repeat: repeat-x;
+            background-size: 36px 24px;
+            background-position: 0 0;
+            filter: drop-shadow(0 -1px 1px rgba(143,36,104,.40));
+            pointer-events: none;
+        }
+        [data-theme="dark"] .erp-footer::before { display: none; }
+
+        /* ========== FIGURA MODO NOCHE: SOMBRERO DE CHARRO ========== */
+        .charro-hat { display: none; }
+        [data-theme="dark"] .charro-hat {
+            display: block;
             position: fixed;
-            top: 78px; right: -40px;
-            width: 170px; height: 170px;
-            border-radius: 50%;
-            background:
-                radial-gradient(circle, #FFD84D 0 34%, transparent 35%),
-                repeating-conic-gradient(#F5C21B 0 9deg, transparent 9deg 30deg);
-            -webkit-mask: radial-gradient(circle, #000 0 98%, transparent 100%);
-                    mask: radial-gradient(circle, #000 0 98%, transparent 100%);
-            opacity: .28;
+            top: 84px; right: 24px;
+            width: 190px; height: auto;
+            transform: rotate(-10deg);
+            opacity: .40;
+            filter: drop-shadow(0 0 14px rgba(232,38,42,.55));
             pointer-events: none;
             z-index: 0;
         }
@@ -115,8 +225,8 @@
         /* NAVBAR */
         .erp-navbar {
             position: relative; z-index: 10;
-            background: var(--clr-navy);
-            border-bottom: 3px solid var(--clr-gold);
+            background: var(--nav-bg);
+            border-bottom: 3px solid var(--nav-border);
             padding: .65rem 1.5rem;
             display: flex; align-items: center;
             justify-content: space-between; flex-wrap: wrap; gap: .5rem;
@@ -125,33 +235,41 @@
         .erp-brand {
             font-family: 'Playfair Display',Georgia,serif;
             font-size: 1.3rem; font-weight: 700;
-            color: #FFFFFF !important;       /* letras blancas */
+            color: #FFFFFF !important;
             text-decoration: none; letter-spacing: .04em;
         }
         .erp-brand span { color: rgba(255,255,255,.85); font-weight: 300; font-size: .85em; }
-        .erp-nav-links { display: flex; align-items: center; gap: .25rem; flex-wrap: wrap; }
+        .erp-nav-links { display: flex; align-items: center; gap: .35rem; flex-wrap: wrap; }
         .erp-nav-link {
-            color: #FFFFFF !important;       /* letras blancas */
+            background: var(--nav-btn-bg);
+            border: 1px solid var(--nav-btn-border);
+            color: #FFFFFF !important;
             font-size: .88rem; font-weight: 500;
             padding: .35rem .75rem; border-radius: 6px;
             text-decoration: none;
             transition: background .2s, color .2s;
         }
         .erp-nav-link:hover, .erp-nav-link.active {
-            background: var(--clr-royal); color: #FFF !important;
+            background: var(--nav-btn-hover); color: #FFF !important;
         }
         .theme-toggle {
-            background: var(--clr-gold); color: var(--clr-navy);
+            background: var(--toggle-bg); color: var(--toggle-fg);
             border: none; border-radius: 50%;
             width: 32px; height: 32px; font-size: .9rem;
             cursor: pointer; transition: transform .2s;
         }
         .theme-toggle:hover { transform: rotate(20deg); }
-        /* CONTENIDO */
+
+        /* CONTENIDO — parte media */
         .erp-main {
             position: relative; z-index: 1;
+            background: var(--main-bg);
+            color: var(--page-text);
             padding: 2rem 0; min-height: calc(100vh - 110px);
         }
+        .erp-card, .erp-table, .erp-alert-danger,
+        .erp-alert-info, .erp-alert-success { color: var(--clr-text); }
+
         /* CARDS */
         .erp-card {
             background: var(--clr-surface);
@@ -170,6 +288,7 @@
             font-size: 1.05rem; letter-spacing: .03em;
             margin: -1.5rem -1.5rem 1.5rem;
         }
+
         /* TABLAS */
         .erp-table {
             width: 100%; border-collapse: separate; border-spacing: 0;
@@ -182,15 +301,20 @@
             padding: .75rem 1rem; border-bottom: 3px solid var(--clr-gold);
         }
         .erp-table tbody td {
-            background: var(--clr-surface); padding: .65rem 1rem;
-            border-bottom: 1px solid var(--clr-border); font-size: .9rem;
+            color: var(--row-text);
+            padding: .65rem 1rem;
+            border-bottom: 1px solid var(--row-line); font-size: .9rem;
         }
-        .erp-table tbody tr:nth-child(even) td { background: var(--clr-ice); }
-        .erp-table tbody tr:hover td { background: var(--hover-row); }
+        .erp-table tbody tr:nth-child(odd)  td { background: var(--row-red); }
+        .erp-table tbody tr:nth-child(even) td { background: var(--row-black); }
+        .erp-table tbody tr:nth-child(odd):hover  td { background: var(--row-red-hover); }
+        .erp-table tbody tr:nth-child(even):hover td { background: var(--row-black-hover); }
+        .erp-table tbody td a { color: var(--row-text); }
         .erp-table tfoot td {
             background: var(--clr-cream); color: var(--clr-gold-dk);
             font-weight: 700; border-top: 2px solid var(--clr-gold);
         }
+
         /* BOTONES */
         .btn-erp-primary {
             background: var(--clr-navy); color: #FFF;
@@ -199,9 +323,9 @@
             cursor: pointer; text-decoration: none; display: inline-block;
             transition: background .2s, color .2s;
         }
-        .btn-erp-primary:hover { background: var(--clr-gold); color: var(--clr-navy); }
+        .btn-erp-primary:hover { background: var(--clr-gold); color: #FFF; }
         .btn-erp-gold {
-            background: var(--clr-gold); color: var(--clr-navy);
+            background: var(--clr-gold); color: #FFF;
             border: 2px solid var(--clr-navy); border-radius: 8px;
             padding: .45rem 1.2rem; font-weight: 700;
             cursor: pointer; text-decoration: none; display: inline-block;
@@ -215,6 +339,7 @@
             cursor: pointer; text-decoration: none; display: inline-block;
         }
         .btn-erp-sm { padding: .25rem .7rem; font-size: .8rem; }
+
         /* FORMULARIOS */
         .erp-label {
             font-size: .83rem; font-weight: 600; color: var(--clr-muted);
@@ -231,15 +356,16 @@
             outline: none; border-color: var(--clr-sky);
             box-shadow: 0 0 0 3px var(--focus-ring);
         }
+
         /* BADGES */
         .badge-erp-active {
-            background: rgba(47,125,50,.12); color: var(--clr-ok);
+            background: rgba(46,139,87,.12); color: var(--clr-ok);
             border: 1px solid currentColor;
             font-size: .75rem; padding: .2rem .6rem;
             border-radius: 20px; font-weight: 600;
         }
         .badge-erp-inactive {
-            background: rgba(194,24,91,.10); color: var(--clr-danger);
+            background: rgba(214,58,47,.10); color: var(--clr-danger);
             border: 1px solid currentColor;
             font-size: .75rem; padding: .2rem .6rem; border-radius: 20px;
         }
@@ -249,9 +375,10 @@
             font-size: .75rem; padding: .2rem .7rem;
             border-radius: 20px; font-weight: 700;
         }
+
         /* ALERTAS */
         .erp-alert-danger {
-            background: rgba(194,24,91,.08); border: 1px solid rgba(194,24,91,.3);
+            background: rgba(214,58,47,.08); border: 1px solid rgba(214,58,47,.3);
             border-left: 5px solid var(--clr-danger); border-radius: 8px;
             padding: 1rem 1.25rem;
         }
@@ -261,39 +388,79 @@
             padding: 1rem 1.25rem;
         }
         .erp-alert-success {
-            background: rgba(47,125,50,.08); border: 1px solid rgba(47,125,50,.3);
+            background: rgba(46,139,87,.08); border: 1px solid rgba(46,139,87,.3);
             border-left: 5px solid var(--clr-ok); border-radius: 8px;
             padding: 1rem 1.25rem;
         }
+
         /* TÍTULO DE PÁGINA */
         .erp-page-title {
             display: flex; align-items: center; gap: 1rem;
             margin-bottom: 1.5rem; padding-bottom: .75rem;
-            border-bottom: 2px solid var(--clr-border);
+            border-bottom: 2px solid var(--page-line);
         }
         .erp-page-title h2 {
             font-family: 'Playfair Display',serif;
-            font-size: 1.6rem; color: var(--clr-navy); margin: 0;
+            font-size: 1.6rem; color: var(--page-text); margin: 0;
         }
-        [data-theme="dark"] .erp-page-title h2 { color: #FFFFFF; }
+
         /* CÓDIGO */
         code, .mono {
             font-family: 'JetBrains Mono',Consolas,monospace;
             font-size: .85em; color: var(--code-color);
             background: var(--code-bg); padding: .1em .4em; border-radius: 4px;
         }
+
         /* FOOTER */
         .erp-footer {
             position: relative; z-index: 1;
-            background: var(--clr-navy); color: #FFFFFF;
+            background: var(--foot-bg); color: #FFFFFF;
             text-align: center; font-size: .78rem;
-            padding: .75rem; border-top: 2px solid var(--clr-gold);
+            padding: .75rem; border-top: 2px solid var(--foot-border);
+        }
+
+        /* MODO NOCHE: TEXTOS LEGIBLES */
+        [data-theme="dark"] h1,
+        [data-theme="dark"] h2,
+        [data-theme="dark"] h3,
+        [data-theme="dark"] h4,
+        [data-theme="dark"] h5,
+        [data-theme="dark"] h6,
+        [data-theme="dark"] .erp-card :is(a, strong, b) {
+            color: #FFFFFF;
         }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
 
 <body>
+
+<!-- HOJAS CAYENDO: el script del final las crea aquí -->
+<div id="leafLayer" aria-hidden="true"></div>
+
+<!-- SOMBRERO DE CHARRO (solo visible en modo noche) -->
+<svg class="charro-hat" viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <ellipse cx="100" cy="100" rx="96" ry="17" fill="#4A0B0B"/>
+    <ellipse cx="100" cy="95" rx="96" ry="16" fill="#C41E22"/>
+    <ellipse cx="100" cy="95" rx="89" ry="12" fill="none" stroke="#FFFFFF"
+             stroke-width="1.6" stroke-dasharray="5 4"/>
+    <path d="M54 95 C55 58 62 24 100 24 C138 24 145 58 146 95 C130 103 70 103 54 95 Z"
+          fill="#E8262A"/>
+    <path d="M65 88 C66 60 71 36 92 30" fill="none" stroke="#FF8A7E"
+          stroke-width="3" stroke-linecap="round" opacity=".6"/>
+    <path d="M82 29 Q100 40 118 29" fill="none" stroke="#8E1B1B" stroke-width="2"
+          stroke-linecap="round"/>
+    <path d="M54.5 84 Q100 98 145.5 84 L146 95 Q100 109 54 95 Z" fill="#1A0505"/>
+    <g fill="#FFFFFF">
+        <circle cx="65.9"  cy="92"   r="2"/>
+        <circle cx="77.2"  cy="94.2" r="2"/>
+        <circle cx="88.6"  cy="95.6" r="2"/>
+        <circle cx="100"   cy="96"   r="2"/>
+        <circle cx="111.4" cy="95.6" r="2"/>
+        <circle cx="122.8" cy="94.2" r="2"/>
+        <circle cx="134.1" cy="92"   r="2"/>
+    </g>
+</svg>
 
 <!-- NAVBAR -->
 <nav class="erp-navbar">
@@ -344,7 +511,7 @@
 
 <!-- FOOTER -->
 <footer class="erp-footer">
-    ~ Dichosos los ojos que te miran por aca ATTE: El ciego ~
+    Monsters Inc. · Dichosos los ojos que te miran por aca ATTE: El ciego · Matias 3J
 </footer>
 
 <!-- Bootstrap JS -->
@@ -368,6 +535,43 @@
             btn.textContent = icons[next];
             localStorage.setItem('erpTheme', next);
         });
+    }
+})();
+</script>
+
+<!-- Hojas cayendo 🏵️ -->
+<script>
+(function () {
+    var LEAF_COUNT    = 14;   // cuántas hojas hay al mismo tiempo
+    var LEAF_FALL_MIN = 9;    // segundos que tarda la más rápida en caer
+    var LEAF_FALL_MAX = 17;   // segundos que tarda la más lenta en caer
+    var LEAF_SIZE_MIN = 16;   // tamaño mínimo (px)
+    var LEAF_SIZE_MAX = 32;   // tamaño máximo (px)
+    var LEAF_EMOJI    = '🏵️';
+
+    var layer = document.getElementById('leafLayer');
+    if (!layer) return;
+
+    function rand(min, max) { return Math.random() * (max - min) + min; }
+
+    for (var i = 0; i < LEAF_COUNT; i++) {
+        var fall = rand(LEAF_FALL_MIN, LEAF_FALL_MAX);
+        var sway = rand(3, 5.5);
+
+        var leaf = document.createElement('div');
+        leaf.className = 'leaf';
+        leaf.style.left = rand(0, 98) + '%';
+        leaf.style.animationDuration = fall + 's';
+        leaf.style.animationDelay = (-rand(0, fall)) + 's';
+
+        var inner = document.createElement('span');
+        inner.textContent = LEAF_EMOJI;
+        inner.style.fontSize = rand(LEAF_SIZE_MIN, LEAF_SIZE_MAX) + 'px';
+        inner.style.animationDuration = sway + 's';
+        inner.style.animationDelay = (-rand(0, sway)) + 's';
+
+        leaf.appendChild(inner);
+        layer.appendChild(leaf);
     }
 })();
 </script>
