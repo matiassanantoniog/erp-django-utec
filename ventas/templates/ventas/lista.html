@@ -35,6 +35,11 @@
             </td>
             {% if user.is_authenticated %}
             <td>
+                <!-- BOTÓN RÁPIDO DE PDF -->
+                <a href="{% url 'ventas:pdf' v.pk %}"
+                   class="btn-erp-gold btn-erp-sm" target="_blank">
+                    📄 PDF
+                </a>
                 <a href="{% url 'ventas:eliminar' v.pk %}"
                    class="btn-erp-danger btn-erp-sm">Eliminar</a>
             </td>
