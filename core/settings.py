@@ -13,8 +13,7 @@ DEBUG = env('DEBUG', default=True)
 #ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
 
-# core/settings.py — actualizar INSTALLED_APPS
-# core/settings.py — actualizar INSTALLED_APPS (terceros):
+# core/settings.py — actualizar INSTALLED_APPS:
 INSTALLED_APPS = [
     'jazzmin',
     'django.contrib.admin',
@@ -29,15 +28,18 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',
-    'rest_framework.authtoken',    # ← agregar
+    'rest_framework.authtoken',
+    'django_filters',              # ← nuevo (nombre de app es django_filters)
     'whitenoise.runserver_nostatic',
     # Apps del ERP
+    'core',
     'clientes',
     'proveedores',
     'productos',
     'ventas',
     'reportes',
     'configuracion',
+    'catalogo',                    # ← nuevo
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,11 +55,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'core.urls'
 
-# ── Templates ─────────────────────────────────────────────────────────────
+# core/settings.py — actualizar TEMPLATES[0]['OPTIONS']['context_processors']:
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],       # carpeta global de templates
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -65,6 +67,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # Context processor del carrito — W13
+                'catalogo.context_processors.carrito_info',
             ],
         },
     },

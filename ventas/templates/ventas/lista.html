@@ -35,13 +35,18 @@
             </td>
             {% if user.is_authenticated %}
             <td>
+                <a href="{% url 'ventas:detalle' v.pk %}"
+                   class="btn-erp-primary btn-erp-sm">Ver</a>
                 <!-- BOTÓN RÁPIDO DE PDF -->
                 <a href="{% url 'ventas:pdf' v.pk %}"
                    class="btn-erp-gold btn-erp-sm" target="_blank">
                     📄 PDF
                 </a>
                 <a href="{% url 'ventas:eliminar' v.pk %}"
-                   class="btn-erp-danger btn-erp-sm">Eliminar</a>
+                   class="btn-erp-danger btn-erp-sm"
+                   onclick="return confirm('¿Eliminar la venta #{{ v.pk }}?');">
+                    Eliminar
+                </a>
             </td>
             {% endif %}
         </tr>
