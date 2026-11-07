@@ -8,16 +8,21 @@ actualizando automáticamente el estado del pedido.
 
 ## HUs seleccionadas
 
-| ID | Historia | Puntos | Semana |
-|---|---|---|---|
-| HU-E5-01 | Como cliente, quiero ver el catálogo sin registrarme | 2 | W13 |
-| HU-E5-02 | Como cliente, quiero filtrar productos por categoría y precio | 3 | W13 |
-| HU-E5-03 | Como cliente, quiero agregar productos a mi carrito | 3 | W13 |
-| HU-E5-04 | Como cliente, quiero ver el contenido de mi carrito | 2 | W13 |
-| HU-E5-05 | Como cliente, quiero proceder al pago con mis datos | 3 | W14 |
-| HU-E5-06 | Como cliente, quiero pagar con tarjeta (Stripe sandbox) | 5 | W14 |
-| HU-E5-07 | Como sistema, quiero confirmar el pago vía webhook | 5 | W15 |
-| HU-E5-08 | Como admin, quiero que el stock se descuente al confirmar | 3 | W15 |
+## Sprint Backlog — actualización W13
+
+| Tarea | Estado |
+|---|---|
+| Catálogo + carrito + context processor | ✅ W13 |
+| pip install stripe | ✅ W14 |
+| STRIPE_* en settings.py y .env | ✅ W14 |
+| checkout_utils.py (calcular_totales, obtener_cliente) | ✅ W14 |
+| CheckoutView (GET/POST) con PaymentIntent | ✅ W14 |
+| Template checkout.html con Stripe.js Card Element | ✅ W14 |
+| pago_exitoso: vaciar carrito + template | ✅ W14 |
+| pago_error: template con causas y reintento | ✅ W14 |
+| Tests con unittest.mock.patch | ✅ W14 |
+| Webhooks + actualizar estado pedido | ⏳ W15 |
+| Descontar stock al confirmar pago | ⏳ W15 |
 
 **Total Sprint 4:** 26 puntos
 
