@@ -12,14 +12,16 @@ Decisiones de diseño aplicadas:
     D-05: DetalleVenta.producto → PROTECT.
     D-06: DetalleVenta.precio_unitario → almacenado (histórico).
 """
-from django.core.validators import MinValueValidator
-from django.core.exceptions import ValidationError
 from decimal import Decimal
 
+from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
 from django.db import models
+
 
 from clientes.models  import Cliente
 from productos.models import Producto
+
 
 # ── Venta ─────────────────────────────────────────────────────────────────
 
@@ -30,13 +32,13 @@ class Venta(models.Model):
     sumando los subtotales de cada DetalleVenta asociado.
     """
 
-    cliente = models.ForeignKey(
-        Cliente,
+    cliente = models.ForeignKey( 
+        Cliente, 
         on_delete=models.PROTECT,      # D-03: no borrar cliente con ventas
         related_name='ventas',
         verbose_name='Cliente'
     )
-    fecha = models.DateTimeField(
+    fecha   = models.DateTimeField(
         auto_now_add=True, verbose_name='Fecha'
     )
 
@@ -76,13 +78,13 @@ class DetalleVenta(models.Model):
 
     venta           = models.ForeignKey(
         Venta,
-        on_delete=models.CASCADE,
+        on_delete=models.CASCADE,      # borrar Venta → borrar sus líneas
         related_name='detalles',
         verbose_name='Venta'
     )
     producto        = models.ForeignKey(
         Producto,
-        on_delete=models.PROTECT,
+        on_delete=models.PROTECT,      # D-05: no borrar producto con ventas
         related_name='detalles_venta',
         verbose_name='Producto'
     )
@@ -108,6 +110,18 @@ class DetalleVenta(models.Model):
         """Subtotal de la línea: cantidad × precio_unitario."""
         return self.precio_unitario * self.cantidad
 
+    def save(self, *args, **kwargs) -> None:
+        """Captura el precio actual del producto si no se especificó.
+
+        Uso de 'is None' (no 'not') porque Decimal('0.00') es falsy
+        pero es un valor válido que NO debe sobreescribirse.
+        """
+        if self.precio_unitario is None:
+            self.precio_unitario = self.producto.precio
+        super().save(*args, **kwargs)
+    
+    # Agregar dentro de la clase DetalleVenta:
+
     def clean(self) -> None:
         """Validación de negocio para línea de detalle.
 
@@ -118,16 +132,6 @@ class DetalleVenta(models.Model):
             raise ValidationError(
                 {'cantidad': 'La cantidad debe ser al menos 1.'}
             )
-
-    def save(self, *args, **kwargs) -> None:
-        """Captura el precio actual del producto si no se especificó.
-
-        Uso de 'is None' (no 'not') porque Decimal('0.00') es falsy
-        pero es un valor válido que NO debe sobreescribirse.
-        """
-        if self.precio_unitario is None:
-            self.precio_unitario = self.producto.precio
-        super().save(*args, **kwargs)
 
 
 # ── Pedido ─────────────────────────────────────────────────────────────────
@@ -179,6 +183,20 @@ class Pedido(models.Model):
         validators=[MinValueValidator(Decimal('0.00'))],  # ← agregar
         verbose_name='Total pagado'
     )
+
+    # ventas/models.py — en la clase Pedido, agregar después de total_pagado:
+
+    items_snapshot = models.JSONField(
+        default=list,
+        blank=True,
+        verbose_name='Snapshot de items del carrito',
+        help_text=(
+            'Copia del carrito al momento de crear el pedido. '
+            'Estructura: [{"producto_id": 1, "nombre": "...", '
+            '"cantidad": 2, "precio": "500.00"}]'
+        )
+    )
+
     class Meta:
         verbose_name        = 'Pedido'
         verbose_name_plural = 'Pedidos'
@@ -186,3 +204,18 @@ class Pedido(models.Model):
 
     def __str__(self) -> str:
         return f"{self.numero_pedido} — {self.cliente} [{self.get_estado_display()}]"
+    
+    def clean(self) -> None:
+        """Valida que la fecha de entrega no sea anterior al pedido.
+
+        Raises:
+            ValidationError: si fecha_entrega < fecha_pedido.date().
+        """
+        if (self.fecha_entrega and self.fecha_pedido and
+                self.fecha_entrega < self.fecha_pedido.date()):
+            raise ValidationError({
+                'fecha_entrega': (
+                    'La fecha de entrega no puede ser anterior '
+                    'a la fecha del pedido.'
+                )
+            })
