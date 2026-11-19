@@ -24,3 +24,6 @@ media/
 # Sistema operativo
 Thumbs.db
 .DS_Store
+
+# Broker y resultados de Celery (archivos temporales)
+celery_data/

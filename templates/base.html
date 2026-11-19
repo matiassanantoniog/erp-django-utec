@@ -1,9 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#2B6CB0">
+    <meta name="theme-color" content="#0B3D91">
     <title>{% block title %}Monsters Inc.{% endblock %} · Matias 3J</title>
 
     <!-- Google Fonts: Playfair Display + Inter + JetBrains Mono -->
@@ -16,105 +17,109 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
-    <!-- Fable 5 ChomperERP — Design System -->
+    <!-- Design System — Azul y Blanco -->
     <style>
-        /* TOKENS MODO DÍA — paleta de los esqueletos */
+        /* TOKENS MODO DÍA — blanco y azul */
         :root, [data-theme="light"] {
-            --clr-navy   : #2E1F4F;
-            --clr-royal  : #6A3FA0;
-            --clr-sky    : #9B6FD0;
-            --clr-ice    : #F6F0DC;
-            --clr-gold   : #C73D95;
-            --clr-gold-dk: #8F2468;
-            --clr-amber  : #A82D78;
-            --clr-cream  : #FBF4DC;
-            --clr-bg     : #EDE3C4;
+            --clr-navy   : #0B3D91;
+            --clr-royal  : #1E5FD0;
+            --clr-sky    : #4A90E2;
+            --clr-ice    : #EAF2FF;
+            --clr-gold   : #2F80ED;
+            --clr-gold-dk: #0B3D91;
+            --clr-amber  : #1E5FD0;
+            --clr-cream  : #EAF2FF;
+            --clr-bg     : #F4F8FF;
             --clr-surface: #FFFFFF;
-            --clr-text   : #2A1B3D;
-            --clr-muted  : #6B5B7E;
-            --clr-border : #D9CDA6;
-            --clr-danger : #D63A2F;
-            --clr-ok     : #2E8B57;
-            --shadow-sm  : 0 1px 4px rgba(46,31,79,.12);
-            --shadow-md  : 0 4px 16px rgba(46,31,79,.18);
-            --hover-row  : rgba(199,61,149,.14);
-            --focus-ring : rgba(199,61,149,.32);
-            --code-bg    : #F6F0DC;
-            --code-color : #6A3FA0;
+            --clr-text   : #0F1F3D;
+            --clr-muted  : #5B6B87;
+            --clr-border : #CFDDF3;
+            --clr-danger : #D32F2F;
+            --clr-ok     : #1E8E5A;
+            --shadow-sm  : 0 1px 4px rgba(11,61,145,.10);
+            --shadow-md  : 0 4px 16px rgba(11,61,145,.16);
+            --hover-row  : rgba(47,128,237,.12);
+            --focus-ring : rgba(47,128,237,.30);
+            --code-bg    : #EAF2FF;
+            --code-color : #1E5FD0;
+            --link-color : #1E5FD0;
 
-            --nav-bg     : #2B6CB0;
-            --nav-border : #7DB9F0;
-            --foot-bg    : #C73D95;
-            --foot-border: #F08AC8;
+            /* Barra superior y footer */
+            --nav-bg     : #0B3D91;
+            --nav-border : #4A90E2;
+            --foot-bg    : #0B3D91;
+            --foot-border: #4A90E2;
 
-            --main-bg    : radial-gradient(ellipse at 30% 0%, #F7F0D8 0%, #EDE3C4 55%, #E2D5AE 100%);
-            --page-text  : #2A1B3D;
-            --page-line  : rgba(42,27,61,.25);
+            /* Fondo de la página (el degradado va en el body) */
+            --page-bg    : linear-gradient(180deg, #FFFFFF 0%, #EAF2FF 100%);
+            --page-text  : #0F1F3D;
+            --page-line  : #CFDDF3;
 
-            --nav-btn-bg      : #2E8B57;
-            --nav-btn-border  : #7BD6A0;
-            --nav-btn-hover   : #226B44;
-            --toggle-bg       : #2E8B57;
-            --toggle-fg       : #FFFFFF;
+            /* Botones de la barra superior */
+            --nav-btn-bg      : rgba(255,255,255,.12);
+            --nav-btn-border  : rgba(255,255,255,.35);
+            --nav-btn-hover   : #2F80ED;
+            --toggle-bg       : #FFFFFF;
+            --toggle-fg       : #0B3D91;
 
-            --row-red        : #C0332A;
-            --row-red-hover  : #DB4A40;
-            --row-black      : #141414;
-            --row-black-hover: #2E2E2E;
-            --row-text       : #FFFFFF;
-            --row-line       : rgba(255,255,255,.18);
+            /* Filas de tabla — blanco y azul claro alternando */
+            --row-a          : #FFFFFF;
+            --row-b          : #EAF2FF;
+            --row-hover      : rgba(47,128,237,.16);
+            --row-text       : #0F1F3D;
+            --row-line       : #CFDDF3;
 
-            --leaf-opacity   : .95;
-            --leaf-glow      : 0 2px 3px rgba(46,31,79,.35);
+            /* Sombra suave bajo las mascotas para despegarlas del fondo */
+            --wall-shadow    : drop-shadow(0 6px 14px rgba(11,61,145,.25));
         }
-        /* TOKENS MODO NOCHE */
+        /* TOKENS MODO NOCHE — azul marino y blanco */
         [data-theme="dark"] {
-            --clr-navy   : #1A0505;
-            --clr-royal  : #8E1B1B;
-            --clr-sky    : #FF5A4D;
-            --clr-ice    : #2A0C0C;
-            --clr-gold   : #E8262A;
-            --clr-gold-dk: #FF6A5E;
-            --clr-amber  : #FF4B3E;
-            --clr-cream  : #330E0E;
-            --clr-bg     : #0D0303;
-            --clr-surface: #1B0808;
+            --clr-navy   : #0A1B3C;
+            --clr-royal  : #2F6FDB;
+            --clr-sky    : #6FA8FF;
+            --clr-ice    : #12294F;
+            --clr-gold   : #3B82F6;
+            --clr-gold-dk: #9CC4FF;
+            --clr-amber  : #5B9BFF;
+            --clr-cream  : #12294F;
+            --clr-bg     : #07142E;
+            --clr-surface: #0E2247;
             --clr-text   : #FFFFFF;
-            --clr-muted  : #DDA9A4;
-            --clr-border : #5A1414;
-            --clr-danger : #FF7A7A;
-            --clr-ok     : #7BC96F;
-            --shadow-sm  : 0 1px 4px rgba(0,0,0,.5);
-            --shadow-md  : 0 4px 18px rgba(232,38,42,.22);
-            --hover-row  : rgba(232,38,42,.16);
-            --focus-ring : rgba(232,38,42,.40);
-            --code-bg    : rgba(232,38,42,.16);
-            --code-color : #FF7A6E;
+            --clr-muted  : #A9BBDD;
+            --clr-border : #234072;
+            --clr-danger : #FF6B6B;
+            --clr-ok     : #5FD38D;
+            --shadow-sm  : 0 1px 4px rgba(0,0,0,.40);
+            --shadow-md  : 0 4px 18px rgba(0,0,0,.50);
+            --hover-row  : rgba(111,168,255,.16);
+            --focus-ring : rgba(111,168,255,.40);
+            --code-bg    : rgba(111,168,255,.16);
+            --code-color : #9CC4FF;
+            --link-color : #8DB8FF;
 
-            --nav-bg     : #1A0505;
-            --nav-border : #E8262A;
-            --foot-bg    : #1A0505;
-            --foot-border: #E8262A;
+            --nav-bg     : #081A3A;
+            --nav-border : #4A90E2;
+            --foot-bg    : #081A3A;
+            --foot-border: #4A90E2;
 
-            --main-bg    : transparent;
+            --page-bg    : #07142E;
             --page-text  : #FFFFFF;
-            --page-line  : #5A1414;
+            --page-line  : #234072;
 
-            --nav-btn-bg      : transparent;
-            --nav-btn-border  : transparent;
-            --nav-btn-hover   : #8E1B1B;
-            --toggle-bg       : #E8262A;
-            --toggle-fg       : #FFFFFF;
+            --nav-btn-bg      : rgba(255,255,255,.08);
+            --nav-btn-border  : rgba(255,255,255,.25);
+            --nav-btn-hover   : #2F6FDB;
+            --toggle-bg       : #FFFFFF;
+            --toggle-fg       : #0A1B3C;
 
-            --row-red        : #A31D1D;
-            --row-red-hover  : #C42B2B;
-            --row-black      : #0A0A0A;
-            --row-black-hover: #2A1212;
+            --row-a          : #0E2247;
+            --row-b          : #12305F;
+            --row-hover      : rgba(111,168,255,.20);
             --row-text       : #FFFFFF;
-            --row-line       : rgba(255,255,255,.16);
+            --row-line       : #234072;
 
-            --leaf-opacity   : .85;
-            --leaf-glow      : 0 0 10px rgba(232,38,42,.55);
+            /* Resplandor azul alrededor de las mascotas en modo noche */
+            --wall-shadow    : drop-shadow(0 0 16px rgba(111,168,255,.45));
         }
 
         /* BASE */
@@ -122,104 +127,46 @@
         body {
             font-family: 'Inter','Segoe UI',sans-serif;
             font-size: 15px;
-            background: var(--clr-bg);
+            background: var(--page-bg);
+            background-color: var(--clr-bg);
+            background-attachment: fixed;
             color: var(--clr-text);
             line-height: 1.6;
             transition: background .25s, color .25s;
             margin: 0;
         }
 
-        /* ========== HOJAS CAYENDO (🏵️) — AMBOS MODOS ==========
-           CORREGIDO: z-index alto, tamaño explícito, duraciones por defecto
-           en CSS (respaldo si el JS falla), line-height:1 en el span. */
-        #leafLayer {
+        /* ========== FONDO DE PANTALLA: DOS MASCOTAS ==========
+           Izquierda: mascota1.png (polo CBTis 198, lentes negros)
+           Derecha:   mascota2.png (sudadera negra)
+           Ambas con sus colores originales, sin opacidad, fijas al borde.
+           Tamaño:  cambia --wall-w (el clamp va de 220px a 340px según la pantalla).
+           Altura:  cambia "center" por "top" o "bottom" en cada regla.
+           Solo se ven en pantallas anchas (desde 1200px); en celular se ocultan. */
+        :root { --wall-w: clamp(220px, 18vw, 340px); }
+
+        .erp-wall {
+            display: none;
             position: fixed;
-            top: 0; left: 0;
-            width: 100vw;
+            top: 0;
+            width: var(--wall-w);
             height: 100vh;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 9999;
-        }
-        .leaf {
-            position: absolute;
-            top: -12vh;
-            will-change: transform;
-            animation-name: leaf-fall;
-            animation-duration: 12s;         /* respaldo por defecto */
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-        }
-        .leaf span {
-            display: inline-block;
-            line-height: 1;
-            opacity: var(--leaf-opacity);
-            filter: drop-shadow(var(--leaf-glow));
-            animation-name: leaf-sway;
-            animation-duration: 4s;          /* respaldo por defecto */
-            animation-timing-function: ease-in-out;
-            animation-iteration-count: infinite;
-        }
-        @keyframes leaf-fall {
-            0%   { transform: translateY(0); }
-            100% { transform: translateY(125vh); }
-        }
-        @keyframes leaf-sway {
-            0%   { transform: translateX(-32px) rotate(-40deg); }
-            25%  { transform: translateX(8px)   rotate(15deg)  scaleX(.8); }
-            50%  { transform: translateX(36px)  rotate(50deg); }
-            75%  { transform: translateX(2px)   rotate(-5deg)  scaleX(.85); }
-            100% { transform: translateX(-32px) rotate(-40deg); }
-        }
-        /* Si la persona prefiere menos movimiento, no se muestran */
-        @media (prefers-reduced-motion: reduce) {
-            #leafLayer { display: none; }
-        }
-
-        /* ========== FIGURA MODO DÍA: CALAVERITAS DE ARRIBA ========== */
-        .erp-navbar::after {
-            content: "";
-            position: absolute;
-            left: 0; right: 0;
-            top: calc(100% + 3px);
-            height: 24px;
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 24'><path d='M18 1.5C12 1.5 8.5 5.5 8.5 10.5c0 3 1.3 4.8 3 5.8V20c0 1.1.9 2 2 2h9c1.1 0 2-.9 2-2v-3.7c1.7-1 3-2.8 3-5.8C27.5 5.5 24 1.5 18 1.5Z' fill='%23FBF4DC' stroke='%232E1F4F' stroke-width='1.2'/><circle cx='14.3' cy='10.5' r='2.9' fill='%232B6CB0'/><circle cx='21.7' cy='10.5' r='2.9' fill='%232B6CB0'/><circle cx='14.3' cy='10.5' r='1.1' fill='%23FBF4DC'/><circle cx='21.7' cy='10.5' r='1.1' fill='%23FBF4DC'/><path d='M18 13.3l-1.3 2.2h2.6z' fill='%232E1F4F'/><path d='M14.5 18v3.4M18 18v3.4M21.5 18v3.4' stroke='%232E1F4F' stroke-width='1'/></svg>");
-            background-repeat: repeat-x;
-            background-size: 36px 24px;
-            background-position: 0 0;
-            filter: drop-shadow(0 1px 1px rgba(46,31,79,.45));
-            pointer-events: none;
-        }
-        [data-theme="dark"] .erp-navbar::after { display: none; }
-
-        /* ========== FIGURA MODO DÍA: CALAVERITAS DE ABAJO ========== */
-        .erp-footer::before {
-            content: "";
-            position: absolute;
-            left: 0; right: 0;
-            bottom: calc(100% + 2px);
-            height: 24px;
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 24'><path d='M18 1.5C12 1.5 8.5 5.5 8.5 10.5c0 3 1.3 4.8 3 5.8V20c0 1.1.9 2 2 2h9c1.1 0 2-.9 2-2v-3.7c1.7-1 3-2.8 3-5.8C27.5 5.5 24 1.5 18 1.5Z' fill='%23FBF4DC' stroke='%238F2468' stroke-width='1.2'/><circle cx='14.3' cy='10.5' r='2.9' fill='%23C73D95'/><circle cx='21.7' cy='10.5' r='2.9' fill='%23C73D95'/><circle cx='14.3' cy='10.5' r='1.1' fill='%23FBF4DC'/><circle cx='21.7' cy='10.5' r='1.1' fill='%23FBF4DC'/><path d='M18 13.3l-1.3 2.2h2.6z' fill='%238F2468'/><path d='M14.5 18v3.4M18 18v3.4M21.5 18v3.4' stroke='%238F2468' stroke-width='1'/><path d='M11 5L5.5 2.5v5Z M11 5l5.5-2.5v5Z' fill='%23C73D95'/><circle cx='11' cy='5' r='1.2' fill='%238F2468'/></svg>");
-            background-repeat: repeat-x;
-            background-size: 36px 24px;
-            background-position: 0 0;
-            filter: drop-shadow(0 -1px 1px rgba(143,36,104,.40));
-            pointer-events: none;
-        }
-        [data-theme="dark"] .erp-footer::before { display: none; }
-
-        /* ========== FIGURA MODO NOCHE: SOMBRERO DE CHARRO ========== */
-        .charro-hat { display: none; }
-        [data-theme="dark"] .charro-hat {
-            display: block;
-            position: fixed;
-            top: 84px; right: 24px;
-            width: 190px; height: auto;
-            transform: rotate(-10deg);
-            opacity: .40;
-            filter: drop-shadow(0 0 14px rgba(232,38,42,.55));
-            pointer-events: none;
             z-index: 0;
+            pointer-events: none;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+            filter: var(--wall-shadow);
+        }
+        #erpWallLeft  { left: 0;  background-image: url("{% static 'img/mascota1.png' %}"); background-position: left center; }
+        #erpWallRight { right: 0; background-image: url("{% static 'img/mascota2.png' %}"); background-position: right center; }
+
+        @media (min-width: 1200px) {
+            .erp-wall { display: block; }
+            /* deja libre el espacio de las mascotas para que el contenido no las tape */
+            .erp-main {
+                padding-left:  calc(var(--wall-w) - 20px);
+                padding-right: calc(var(--wall-w) - 20px);
+            }
         }
 
         /* NAVBAR */
@@ -239,6 +186,7 @@
             text-decoration: none; letter-spacing: .04em;
         }
         .erp-brand span { color: rgba(255,255,255,.85); font-weight: 300; font-size: .85em; }
+
         .erp-nav-links { display: flex; align-items: center; gap: .35rem; flex-wrap: wrap; }
         .erp-nav-link {
             background: var(--nav-btn-bg);
@@ -260,10 +208,10 @@
         }
         .theme-toggle:hover { transform: rotate(20deg); }
 
-        /* CONTENIDO — parte media */
+        /* CONTENIDO (transparente para que se vea el fondo) */
         .erp-main {
             position: relative; z-index: 1;
-            background: var(--main-bg);
+            background: transparent;
             color: var(--page-text);
             padding: 2rem 0; min-height: calc(100vh - 110px);
         }
@@ -283,13 +231,13 @@
             background: var(--clr-navy); color: #FFF;
             border-radius: 10px 10px 0 0;
             padding: .85rem 1.25rem;
-            border-left: 5px solid var(--clr-gold);
+            border-left: 5px solid var(--clr-sky);
             font-family: 'Playfair Display',serif;
             font-size: 1.05rem; letter-spacing: .03em;
             margin: -1.5rem -1.5rem 1.5rem;
         }
 
-        /* TABLAS */
+        /* TABLAS — blanco y azul claro alternando */
         .erp-table {
             width: 100%; border-collapse: separate; border-spacing: 0;
             border-radius: 10px; overflow: hidden; box-shadow: var(--shadow-sm);
@@ -298,32 +246,31 @@
             background: var(--clr-navy); color: #FFF;
             font-weight: 600; font-size: .82rem;
             text-transform: uppercase; letter-spacing: .06em;
-            padding: .75rem 1rem; border-bottom: 3px solid var(--clr-gold);
+            padding: .75rem 1rem; border-bottom: 3px solid var(--clr-sky);
         }
         .erp-table tbody td {
             color: var(--row-text);
             padding: .65rem 1rem;
             border-bottom: 1px solid var(--row-line); font-size: .9rem;
         }
-        .erp-table tbody tr:nth-child(odd)  td { background: var(--row-red); }
-        .erp-table tbody tr:nth-child(even) td { background: var(--row-black); }
-        .erp-table tbody tr:nth-child(odd):hover  td { background: var(--row-red-hover); }
-        .erp-table tbody tr:nth-child(even):hover td { background: var(--row-black-hover); }
-        .erp-table tbody td a { color: var(--row-text); }
+        .erp-table tbody tr:nth-child(odd)  td { background: var(--row-a); }
+        .erp-table tbody tr:nth-child(even) td { background: var(--row-b); }
+        .erp-table tbody tr:hover td { background: var(--row-hover); }
+        .erp-table tbody td a { color: var(--link-color); }
         .erp-table tfoot td {
             background: var(--clr-cream); color: var(--clr-gold-dk);
-            font-weight: 700; border-top: 2px solid var(--clr-gold);
+            font-weight: 700; border-top: 2px solid var(--clr-sky);
         }
 
         /* BOTONES */
         .btn-erp-primary {
             background: var(--clr-navy); color: #FFF;
-            border: 2px solid var(--clr-gold); border-radius: 8px;
+            border: 2px solid var(--clr-sky); border-radius: 8px;
             padding: .45rem 1.2rem; font-weight: 600; font-size: .88rem;
             cursor: pointer; text-decoration: none; display: inline-block;
             transition: background .2s, color .2s;
         }
-        .btn-erp-primary:hover { background: var(--clr-gold); color: #FFF; }
+        .btn-erp-primary:hover { background: var(--clr-royal); color: #FFF; }
         .btn-erp-gold {
             background: var(--clr-gold); color: #FFF;
             border: 2px solid var(--clr-navy); border-radius: 8px;
@@ -331,7 +278,7 @@
             cursor: pointer; text-decoration: none; display: inline-block;
             transition: background .2s;
         }
-        .btn-erp-gold:hover { background: var(--clr-amber); }
+        .btn-erp-gold:hover { background: var(--clr-amber); color: #FFF; }
         .btn-erp-danger {
             background: var(--clr-danger); color: #FFF; border: none;
             border-radius: 8px; padding: .4rem 1rem;
@@ -359,26 +306,26 @@
 
         /* BADGES */
         .badge-erp-active {
-            background: rgba(46,139,87,.12); color: var(--clr-ok);
+            background: rgba(30,142,90,.12); color: var(--clr-ok);
             border: 1px solid currentColor;
             font-size: .75rem; padding: .2rem .6rem;
             border-radius: 20px; font-weight: 600;
         }
         .badge-erp-inactive {
-            background: rgba(214,58,47,.10); color: var(--clr-danger);
+            background: rgba(211,47,47,.10); color: var(--clr-danger);
             border: 1px solid currentColor;
             font-size: .75rem; padding: .2rem .6rem; border-radius: 20px;
         }
         .badge-erp-gold {
             background: var(--clr-cream); color: var(--clr-gold-dk);
-            border: 1px solid var(--clr-gold);
+            border: 1px solid var(--clr-sky);
             font-size: .75rem; padding: .2rem .7rem;
             border-radius: 20px; font-weight: 700;
         }
 
         /* ALERTAS */
         .erp-alert-danger {
-            background: rgba(214,58,47,.08); border: 1px solid rgba(214,58,47,.3);
+            background: rgba(211,47,47,.08); border: 1px solid rgba(211,47,47,.3);
             border-left: 5px solid var(--clr-danger); border-radius: 8px;
             padding: 1rem 1.25rem;
         }
@@ -388,7 +335,7 @@
             padding: 1rem 1.25rem;
         }
         .erp-alert-success {
-            background: rgba(46,139,87,.08); border: 1px solid rgba(46,139,87,.3);
+            background: rgba(30,142,90,.08); border: 1px solid rgba(30,142,90,.3);
             border-left: 5px solid var(--clr-ok); border-radius: 8px;
             padding: 1rem 1.25rem;
         }
@@ -401,7 +348,7 @@
         }
         .erp-page-title h2 {
             font-family: 'Playfair Display',serif;
-            font-size: 1.6rem; color: var(--page-text); margin: 0;
+            font-size: 1.6rem; color: var(--clr-navy); margin: 0;
         }
 
         /* CÓDIGO */
@@ -435,36 +382,13 @@
 
 <body>
 
-<!-- HOJAS CAYENDO: el script del final las crea aquí -->
-<div id="leafLayer" aria-hidden="true"></div>
-
-<!-- SOMBRERO DE CHARRO (solo visible en modo noche) -->
-<svg class="charro-hat" viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <ellipse cx="100" cy="100" rx="96" ry="17" fill="#4A0B0B"/>
-    <ellipse cx="100" cy="95" rx="96" ry="16" fill="#C41E22"/>
-    <ellipse cx="100" cy="95" rx="89" ry="12" fill="none" stroke="#FFFFFF"
-             stroke-width="1.6" stroke-dasharray="5 4"/>
-    <path d="M54 95 C55 58 62 24 100 24 C138 24 145 58 146 95 C130 103 70 103 54 95 Z"
-          fill="#E8262A"/>
-    <path d="M65 88 C66 60 71 36 92 30" fill="none" stroke="#FF8A7E"
-          stroke-width="3" stroke-linecap="round" opacity=".6"/>
-    <path d="M82 29 Q100 40 118 29" fill="none" stroke="#8E1B1B" stroke-width="2"
-          stroke-linecap="round"/>
-    <path d="M54.5 84 Q100 98 145.5 84 L146 95 Q100 109 54 95 Z" fill="#1A0505"/>
-    <g fill="#FFFFFF">
-        <circle cx="65.9"  cy="92"   r="2"/>
-        <circle cx="77.2"  cy="94.2" r="2"/>
-        <circle cx="88.6"  cy="95.6" r="2"/>
-        <circle cx="100"   cy="96"   r="2"/>
-        <circle cx="111.4" cy="95.6" r="2"/>
-        <circle cx="122.8" cy="94.2" r="2"/>
-        <circle cx="134.1" cy="92"   r="2"/>
-    </g>
-</svg>
+<!-- FONDO DE PANTALLA: mascotas a los lados -->
+<div id="erpWallLeft"  class="erp-wall" aria-hidden="true"></div>
+<div id="erpWallRight" class="erp-wall" aria-hidden="true"></div>
 
 <!-- NAVBAR -->
 <nav class="erp-navbar">
-    <a class="erp-brand" href="/">📦 Monsters Inc. <span>· Matias 3J</span></a>
+    <a class="erp-brand" href="/">Doofenshmirtz Malvados y Asociados<span>· Matias 3J</span></a>
     <div class="erp-nav-links">
         <a href="{% url 'productos:lista' %}"
            class="erp-nav-link {% block nav_productos %}{% endblock %}">Productos</a>
@@ -475,7 +399,7 @@
         <a href="{% url 'ventas:lista' %}"
            class="erp-nav-link {% block nav_ventas %}{% endblock %}">Ventas</a>
         <a href="{% url 'reportes:inicio' %}"
-           class="erp-nav-link {% block nav_reportes %}{% endblock %}">Reportes</a>
+           class="erp-nav-link {% block nav_reportes %}{% endblock %}">📈 Reportes</a>
 
         <!-- TIENDA (catálogo) -->
         <a href="{% url 'catalogo:catalogo' %}"
@@ -505,7 +429,7 @@
 
 <!-- MENSAJES FLASH -->
 {% if messages %}
-<div class="container mt-3">
+<div class="container mt-3" style="position:relative; z-index:1;">
     {% for m in messages %}
     <div class="erp-alert-{% if m.tags == 'error' %}danger{% elif m.tags == 'success' %}success{% else %}info{% endif %} d-flex justify-content-between align-items-center mb-2"
          role="alert">
@@ -526,7 +450,7 @@
 
 <!-- FOOTER -->
 <footer class="erp-footer">
-    Monsters Inc. · Dichosos los ojos que te miran por aca ATTE: El ciego · Matias 3J
+    "Wᴀsʜ ᴍʏ ʙᴇʟʟʏ, Cʟᴇᴀɴ ᴍʏ ʙᴇʟʟʏ"
 </footer>
 
 <!-- Bootstrap JS -->
@@ -550,43 +474,6 @@
             btn.textContent = icons[next];
             localStorage.setItem('erpTheme', next);
         });
-    }
-})();
-</script>
-
-<!-- Hojas cayendo 🏵️ -->
-<script>
-(function () {
-    var LEAF_COUNT    = 14;   // cuántas hojas hay al mismo tiempo
-    var LEAF_FALL_MIN = 9;    // segundos que tarda la más rápida en caer
-    var LEAF_FALL_MAX = 17;   // segundos que tarda la más lenta en caer
-    var LEAF_SIZE_MIN = 16;   // tamaño mínimo (px)
-    var LEAF_SIZE_MAX = 32;   // tamaño máximo (px)
-    var LEAF_EMOJI    = '🏵️';
-
-    var layer = document.getElementById('leafLayer');
-    if (!layer) return;
-
-    function rand(min, max) { return Math.random() * (max - min) + min; }
-
-    for (var i = 0; i < LEAF_COUNT; i++) {
-        var fall = rand(LEAF_FALL_MIN, LEAF_FALL_MAX);
-        var sway = rand(3, 5.5);
-
-        var leaf = document.createElement('div');
-        leaf.className = 'leaf';
-        leaf.style.left = rand(0, 98) + '%';
-        leaf.style.animationDuration = fall + 's';
-        leaf.style.animationDelay = (-rand(0, fall)) + 's';
-
-        var inner = document.createElement('span');
-        inner.textContent = LEAF_EMOJI;
-        inner.style.fontSize = rand(LEAF_SIZE_MIN, LEAF_SIZE_MAX) + 'px';
-        inner.style.animationDuration = sway + 's';
-        inner.style.animationDelay = (-rand(0, sway)) + 's';
-
-        leaf.appendChild(inner);
-        layer.appendChild(leaf);
     }
 })();
 </script>

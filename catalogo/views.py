@@ -36,6 +36,7 @@ from .checkout_utils import (
     generar_numero_pedido,
     obtener_o_crear_cliente,
 )
+from ventas.tasks import enviar_confirmacion_pedido
 
 # Configurar la clave secreta de Stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -305,28 +306,42 @@ def checkout(request):
         'publishable_key': publishable_key,
     })
 
-
 def pago_exitoso(request, pedido_id: int):
-    """Vista de confirmación post-pago exitoso.
+    """Vista de confirmación post-pago exitoso — W16.
 
-    Vacía el carrito de la sesión y muestra el número de pedido.
-    Stripe redirige aquí después de `stripe.confirmCardPayment` exitoso.
+    Cambios respecto a W14:
+        Dispara la tarea asíncrona SOLO si el pedido ya está 'pagado'
+        (es decir, si el webhook de Stripe ya lo confirmó).
+        Si el webhook aún no llega, no se dispara nada: el webhook
+        será quien encole la tarea.
     """
     from django.shortcuts import get_object_or_404
     pedido = get_object_or_404(Pedido, pk=pedido_id)
 
-    # Vaciar el carrito al confirmar el pago
+    # Vaciar el carrito de la sesión
     _guardar_carrito(request, {})
-    messages.success(
-        request,
-        f'¡Pago exitoso! Tu pedido {pedido.numero_pedido} '
-        f'está confirmado. Total: ${pedido.total_pagado}'
-    )
+
+    if pedido.estado == 'pagado':
+        # ── NUEVO W16: disparar tarea asíncrona de confirmación ───────
+        # .delay() escribe el mensaje en el broker y regresa de inmediato.
+        # El worker la ejecutará en segundo plano.
+        enviar_confirmacion_pedido.delay(pedido.pk)
+        # ──────────────────────────────────────────────────────────────
+        messages.success(
+            request,
+            f'¡Pago exitoso! Tu pedido {pedido.numero_pedido} '
+            f'está confirmado. Recibirás un correo de confirmación pronto.'
+        )
+    else:
+        messages.info(
+            request,
+            f'Estamos confirmando el pago de tu pedido '
+            f'{pedido.numero_pedido}. Te avisaremos por correo.'
+        )
 
     return render(request, 'catalogo/pago_exitoso.html', {
         'pedido': pedido,
     })
-
 
 def pago_error(request):
     """Vista de error de pago — muestra mensaje y permite reintentar."""
