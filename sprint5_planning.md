@@ -6,17 +6,22 @@ Al finalizar el Sprint 5, el ERP ejecutará tareas pesadas de forma
 asíncrona con Celery: correos de confirmación, alertas de
 stock bajo y reporte diario de ventas.
 
-## HUs seleccionadas
+## Sprint Backlog — actualización W17
 
-| ID | Historia | Puntos | Semana |
-|---|---|---|---|
-| HU-E6-01 | Como dev, quiero infraestructura Celery funcional (broker de archivos) | 3 | W16 |
-| HU-E6-02 | Como sistema, quiero ejecutar tareas sin bloquear HTTP | 2 | W16 |
-| HU-E6-03 | Como cliente, quiero correo de confirmación post-pago | 5 | W17 |
-| HU-E6-04 | Como admin, quiero correo cuando el stock es bajo | 3 | W17 |
-| HU-E6-05 | Como admin, quiero reporte diario de ventas a las 8 AM | 3 | W18 |
-| HU-E6-06 | Como dev, quiero verificar las tareas con el log del worker | 2 | W16 |
-
+| Tarea | Estado |
+|---|---|
+| pip install celery redis flower | ✅ W16 |
+| core/celery.py + tareas placeholder | ✅ W16 |
+| pip install django-anymail | ✅ W17 |
+| EMAIL_BACKEND por variable de entorno (consola / anymail / SMTP) | ✅ W17 |
+| correo_enviado en Pedido + migración 0004 | ✅ W17 |
+| Template confirmacion_pedido.html + .txt (correo de pago) | ✅ W17 |
+| Template alerta_stock.html + .txt (correo de stock bajo) | ✅ W17 |
+| enviar_confirmacion_pedido: correo real + idempotencia atómica | ✅ W17 |
+| verificar_stock_bajo: alerta al admin | ✅ W17 |
+| Comando probar_correos | ✅ W17 |
+| 9 tests con mail.outbox | ✅ W17 |
+| Celery Beat + tareas programadas | ⏳ W18 |
 **Total Sprint 5:** 18 puntos
 
 ## DoD — Sprint 5

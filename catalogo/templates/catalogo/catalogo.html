@@ -3,14 +3,14 @@
 
 {% block content %}
 <div class="erp-page-title">
-    <h2>🛒 Catálogo</h2>
+    <h2>🧾 Catálogo</h2>
     <span style="margin-left:auto;color:var(--clr-muted);font-size:.85rem;">
         {{ page_obj.paginator.count }} producto(s) disponibles
     </span>
     <a href="{% url 'catalogo:carrito' %}"
        class="btn-erp-gold"
        style="position:relative;">
-        🛍️ Carrito
+        🛒 Carrito
         {% if carrito_total_items > 0 %}
         <span style="position:absolute;top:-8px;right:-8px;
                      background:var(--clr-danger);color:#FFF;
