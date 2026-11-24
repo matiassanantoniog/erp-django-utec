@@ -139,13 +139,13 @@ EMAIL_BACKEND = env(
 # Remitente visible en los correos
 DEFAULT_FROM_EMAIL = env(
     'DEFAULT_FROM_EMAIL',
-    default='ERP Django <noreply@erp-django.com>'
+    default='ERP Django <ma.sanantoniog.2528@cbtis198.edu.mx>'
 )
 
 # Quién recibe la alerta de stock bajo (uno o varios, separados por coma)
 ALERTA_STOCK_DESTINATARIOS = [
     c.strip()
-    for c in env('ADMIN_EMAIL', default='admin@erp-django.com').split(',')
+    for c in env('ADMIN_EMAIL', default='ma.sanatoniog.2528@cbtis198.edu.mx').split(',')
     if c.strip()
 ]
 
