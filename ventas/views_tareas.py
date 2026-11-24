@@ -17,12 +17,19 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 from ventas.tasks import reporte_ventas_diario, verificar_stock_bajo
+from datetime import time
+
+from django.utils import timezone
+
+from ventas.models import EjecucionTarea
 
 logger = logging.getLogger(__name__)
 
 
 def _tarea_reporte() -> dict:
-    r = reporte_ventas_diario.apply().get()
+    r = reporte_ventas_diario.apply(
+        kwargs={'dias_atras': settings.REPORTE_DIAS_ATRAS}
+    ).get()
     return {'correo_enviado': r['correo_enviado']}
 
 
@@ -30,10 +37,38 @@ def _tarea_stock() -> dict:
     r = verificar_stock_bajo.apply(kwargs={'umbral': 5}).get()
     return {'total': r['total'], 'alerta_enviada': r['alerta_enviada']}
 
+def _tarea_reporte_programado() -> dict:
+    """Envía el reporte si ya pasó REPORTE_HORA y hoy no se ha enviado."""
+    ahora = timezone.localtime()
+    try:
+        hh, mm = settings.REPORTE_HORA.split(':')
+        hora_objetivo = time(int(hh), int(mm))
+    except ValueError:
+        return {'ejecutado': False, 'motivo': 'REPORTE_HORA inválida'}
+
+    if ahora.time() < hora_objetivo:
+        return {'ejecutado': False, 'motivo': 'aún no es la hora'}
+
+    registro, creado = EjecucionTarea.objects.get_or_create(
+        nombre='reporte', fecha=ahora.date()
+    )
+    if not creado:
+        return {'ejecutado': False, 'motivo': 'ya se envió hoy'}
+
+    try:
+        resumen = _tarea_reporte()
+    except Exception:
+        registro.delete()          # permite reintentar en la siguiente llamada
+        raise
+    if not resumen['correo_enviado']:
+        registro.delete()
+    return {'ejecutado': True, **resumen}
+
 
 TAREAS = {
-    'reporte': _tarea_reporte,
-    'stock':   _tarea_stock,
+    'reporte':            _tarea_reporte,
+    'stock':              _tarea_stock,
+    'reporte-programado': _tarea_reporte_programado,
 }
 
 
