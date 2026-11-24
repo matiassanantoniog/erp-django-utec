@@ -1,6 +1,22 @@
 # Sprint 5 Planning — ERP Django
 ## Semanas W16–W18 · Espiral 6: Celery e Integraciones
 
+## Sprint 5 — Estado final W18
+
+| HU | Estado | Pts |
+|---|---|---|
+| HU-E6-01 a HU-E6-06 | ✅ Completadas | 18/18 |
+
+## Hito M6 — ALCANZADO ✅
+- Tareas: ejecutadas sin bloquear la petición
+- Scheduler: CELERY_BEAT_SCHEDULE activo (correr_programadas / Beat)
+- Correo: enviar_confirmacion_pedido → enviado post-pago
+- Alerta: verificar_stock_bajo → correo al admin
+- Reporte: crontab(8,0) → 8:00 AM diario (día anterior)
+- Tests: Ran 172 tests → OK
+- Fecha: ___/___/_____
+
+
 **Sprint Goal:**
 Al finalizar el Sprint 5, el ERP ejecutará tareas pesadas de forma
 asíncrona con Celery: correos de confirmación, alertas de

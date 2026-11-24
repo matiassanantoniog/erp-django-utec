@@ -156,9 +156,11 @@
             background-repeat: no-repeat;
             background-size: 100% auto;
             filter: var(--wall-shadow);
+            transform-origin: 50% 62%;
+            --dir: 1;                         /* 1 = izquierda, -1 = derecha (espejo) */
         }
         #erpWallLeft  { left: 0;  background-image: url("{% static 'img/mascota1.png' %}"); background-position: left center; }
-        #erpWallRight { right: 0; background-image: url("{% static 'img/mascota2.png' %}"); background-position: right center; }
+        #erpWallRight { right: 0; background-image: url("{% static 'img/mascota2.png' %}"); background-position: right center; --dir: -1; }
 
         @media (min-width: 1200px) {
             .erp-wall { display: block; }
@@ -167,6 +169,42 @@
                 padding-left:  calc(var(--wall-w) - 20px);
                 padding-right: calc(var(--wall-w) - 20px);
             }
+        }
+
+        /* ========== BAILE DE LAS MASCOTAS ==========
+           El JS del final agrega una de estas clases al hacer clic en un botón.
+           Altura del salto: cambia los -70px / -80px.
+           Duración: cambia los segundos de cada "animation". */
+        .dog-salto { animation: dog-salto .8s ease-out both; }
+        .dog-baile { animation: dog-baile 1s ease-in-out both; }
+        .dog-giro  { animation: dog-giro  .95s ease-in-out both; }
+        .dog-late  { animation-delay: .12s; }   /* el de la derecha responde un instante después */
+
+        @keyframes dog-salto {
+            0%   { transform: translateY(0) scale(1, 1); }
+            14%  { transform: translateY(0) scale(1.07, .91); }
+            40%  { transform: translateY(-70px) scale(.97, 1.06); }
+            62%  { transform: translateY(0) scale(1.06, .93); }
+            80%  { transform: translateY(-22px) scale(1, 1); }
+            100% { transform: translateY(0) scale(1, 1); }
+        }
+        @keyframes dog-baile {
+            0%   { transform: rotate(0) translateY(0); }
+            14%  { transform: rotate(calc(-9deg * var(--dir))) translateY(-20px); }
+            28%  { transform: rotate(calc( 9deg * var(--dir))) translateY(0); }
+            42%  { transform: rotate(calc(-9deg * var(--dir))) translateY(-20px); }
+            56%  { transform: rotate(calc( 9deg * var(--dir))) translateY(0); }
+            72%  { transform: rotate(calc(-5deg * var(--dir))) translateY(-10px); }
+            100% { transform: rotate(0) translateY(0); }
+        }
+        @keyframes dog-giro {
+            0%   { transform: perspective(700px) translateY(0) rotateY(0); }
+            45%  { transform: perspective(700px) translateY(-80px) rotateY(calc(180deg * var(--dir))); }
+            100% { transform: perspective(700px) translateY(0) rotateY(calc(360deg * var(--dir))); }
+        }
+        /* Si la persona prefiere menos movimiento, no se animan */
+        @media (prefers-reduced-motion: reduce) {
+            .dog-salto, .dog-baile, .dog-giro { animation: none; }
         }
 
         /* NAVBAR */
@@ -374,7 +412,7 @@
         [data-theme="dark"] h5,
         [data-theme="dark"] h6,
         [data-theme="dark"] .erp-card :is(a, strong, b) {
-            color: #FFFFFF;
+            color: #FFFFFF !important;
         }
     </style>
     {% block extra_css %}{% endblock %}
@@ -472,6 +510,74 @@
             localStorage.setItem('erpTheme', next);
         });
     }
+})();
+</script>
+
+<!-- Las mascotas bailan al hacer clic en botones y enlaces -->
+<script>
+(function () {
+    var BAILE_ACTIVO = true;   // pon false para desactivar el baile
+    var RETRASO_NAV  = 350;    // ms que espera antes de abrir otra página (0 = sin espera)
+
+    var L = document.getElementById('erpWallLeft');
+    var R = document.getElementById('erpWallRight');
+    if (!L || !R) return;
+
+    var reducir = window.matchMedia &&
+                  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var movimientos = ['salto', 'baile', 'giro'];
+    var ultimo = -1;
+
+    // Quita la clase al terminar para poder repetir el baile
+    [L, R].forEach(function (el) {
+        el.addEventListener('animationend', function () { el.className = 'erp-wall'; });
+    });
+
+    // Devuelve true si las mascotas están visibles y se animaron
+    function bailar() {
+        if (!BAILE_ACTIVO || reducir) return false;
+        if (getComputedStyle(L).display === 'none') return false;   // pantallas chicas
+
+        var i;
+        do { i = Math.floor(Math.random() * movimientos.length); } while (i === ultimo);
+        ultimo = i;
+
+        [L, R].forEach(function (el, idx) {
+            el.className = 'erp-wall';
+            void el.offsetWidth;                       // reinicia la animación
+            el.classList.add('dog-' + movimientos[i]);
+            if (idx === 1) el.classList.add('dog-late');
+        });
+        return true;
+    }
+
+    document.addEventListener('click', function (e) {
+        var el = e.target.closest(
+            'a[href], button, input[type="submit"], .erp-card[onclick], ' +
+            '.btn-erp-primary, .btn-erp-gold, .btn-erp-danger'
+        );
+        if (!el) return;
+
+        var animo = bailar();
+
+        // ¿Va a abrir otra página? Entonces espera un momento para que se vea el baile
+        var url = null;
+        if (el.tagName === 'A') {
+            url = el.getAttribute('href');
+            if (!url || url.charAt(0) === '#' || /^javascript:/i.test(url) ||
+                el.target === '_blank' || el.hasAttribute('download')) url = null;
+        } else if (el.classList.contains('erp-card')) {
+            var m = /window\.location\s*=\s*['"]([^'"]+)['"]/.exec(el.getAttribute('onclick') || '');
+            if (m) url = m[1];
+        }
+
+        if (!url || !animo || !RETRASO_NAV) return;
+        if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+
+        e.preventDefault();
+        e.stopPropagation();   // evita que el onclick de la tarjeta navegue de inmediato
+        setTimeout(function () { window.location.href = url; }, RETRASO_NAV);
+    }, true);
 })();
 </script>
 {% block extra_js %}{% endblock %}
